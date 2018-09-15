@@ -1,14 +1,12 @@
 package main
 
 import (
+	"apiserver_demos/demo01/router"
 	"errors"
+	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"time"
-
-	"apiserver/router"
-
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
