@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"apiserver/pkg/errno"
+	"apiserver_demos/demo05/pkg/errno"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
