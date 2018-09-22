@@ -35,7 +35,7 @@ func (c *Config) initConfig() error {
 	if c.Name != "" {
 		viper.SetConfigFile(c.Name) // 如果指定了配置文件，则解析指定的配置文件
 	} else {
-		viper.AddConfigPath("conf") // 如果没有指定配置文件，则解析默认的配置文件
+		viper.AddConfigPath("/Users/leon/gopath/src/apiserver_demos/demo03/conf") // 如果没有指定配置文件，则解析默认的配置文件
 		viper.SetConfigName("config")
 	}
 	viper.SetConfigType("yaml")     // 设置配置文件格式为YAML
@@ -50,6 +50,7 @@ func (c *Config) initConfig() error {
 	return nil
 }
 
+//初始化日志配置
 func (c *Config) initLog() {
 	passLagerCfg := log.PassLagerCfg{
 		Writers:        viper.GetString("log.writers"),
