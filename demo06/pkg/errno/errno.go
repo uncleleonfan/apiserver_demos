@@ -2,6 +2,7 @@ package errno
 
 import "fmt"
 
+// Errno 自定义错误码结构，实现了error接口
 type Errno struct {
 	Code    int
 	Message string
@@ -48,6 +49,7 @@ func DecodeErr(err error) (int, string) {
 		return OK.Code, OK.Message
 	}
 
+	//检查error的类型
 	switch typed := err.(type) {
 	case *Err:
 		return typed.Code, typed.Message
