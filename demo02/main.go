@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"apiserver/config"
-	"apiserver/router"
+	"apiserver_demos/demo02/config"
+	"apiserver_demos/demo02/router"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/pflag"
@@ -15,6 +15,7 @@ import (
 )
 
 var (
+	// 读取配置文件路径
 	cfg = pflag.StringP("config", "c", "", "apiserver config file path.")
 )
 
@@ -27,6 +28,7 @@ func main() {
 	}
 
 	// Set gin mode.
+	// gin 有 3 种运行模式：debug、release 和 test，其中 debug 模式会打印很多 debug 信息。
 	gin.SetMode(viper.GetString("runmode"))
 
 	// Create the Gin engine.
@@ -52,6 +54,7 @@ func main() {
 	}()
 
 	log.Printf("Start to listening the incoming requests on http address: %s", viper.GetString("addr"))
+	// 使用配置文件的端口号
 	log.Printf(http.ListenAndServe(viper.GetString("addr"), g).Error())
 }
 
@@ -59,6 +62,7 @@ func main() {
 func pingServer() error {
 	for i := 0; i < viper.GetInt("max_ping_count"); i++ {
 		// Ping the server by sending a GET request to `/health`.
+		// 使用配置文件的url
 		resp, err := http.Get(viper.GetString("url") + "/sd/health")
 		if err == nil && resp.StatusCode == 200 {
 			return nil

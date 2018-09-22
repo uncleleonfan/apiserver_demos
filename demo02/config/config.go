@@ -29,15 +29,17 @@ func Init(cfg string) error {
 }
 
 func (c *Config) initConfig() error {
+	// 通过指定配置文件可以很方便地连接不同的环境（开发环境、测试环境）并加载不同的配置，方便开发和测试
 	if c.Name != "" {
 		viper.SetConfigFile(c.Name) // 如果指定了配置文件，则解析指定的配置文件
 	} else {
-		viper.AddConfigPath("conf") // 如果没有指定配置文件，则解析默认的配置文件
+		//指定绝对路径
+		viper.AddConfigPath("/Users/leon/gopath/src/apiserver_demos/demo02/conf") // 如果没有指定配置文件，则解析默认的配置文件
 		viper.SetConfigName("config")
 	}
 	viper.SetConfigType("yaml")     // 设置配置文件格式为YAML
 	viper.AutomaticEnv()            // 读取匹配的环境变量
-	viper.SetEnvPrefix("APISERVER") // 读取环境变量的前缀为APISERVER
+	viper.SetEnvPrefix("APISERVER") // 读取环境变量的前缀为APISERVER， 如APISERVER_RUNMODE
 	replacer := strings.NewReplacer(".", "_")
 	viper.SetEnvKeyReplacer(replacer)
 	if err := viper.ReadInConfig(); err != nil { // viper解析配置文件
@@ -47,7 +49,7 @@ func (c *Config) initConfig() error {
 	return nil
 }
 
-// 监控配置文件变化并热加载程序
+// 监控配置文件变化并热加载程序 所谓热更新是指：可以不重启 API 进程，使 API 加载最新配置项的值。
 func (c *Config) watchConfig() {
 	viper.WatchConfig()
 	viper.OnConfigChange(func(e fsnotify.Event) {
