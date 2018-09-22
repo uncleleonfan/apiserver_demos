@@ -18,6 +18,7 @@ func Create(c *gin.Context) {
 	}
 
 	var err error
+	// 检查是否传参
 	if err := c.Bind(&r); err != nil {
 		c.JSON(http.StatusOK, gin.H{"error": errno.ErrBind})
 		return
