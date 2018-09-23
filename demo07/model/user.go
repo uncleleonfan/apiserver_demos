@@ -3,13 +3,14 @@ package model
 import (
 	"fmt"
 
-	"apiserver/pkg/auth"
-	"apiserver/pkg/constvar"
+	"apiserver_demos/demo07/pkg/auth"
+	"apiserver_demos/demo07/pkg/constvar"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // User represents a registered user.
+// ORM 实体类
 type UserModel struct {
 	BaseModel
 	Username string `json:"username" gorm:"column:username;not null" binding:"required" validate:"min=1,max=32"`
@@ -50,14 +51,16 @@ func ListUser(username string, offset, limit int) ([]*UserModel, uint64, error) 
 		limit = constvar.DefaultLimit
 	}
 
+	//创建用户数组，初始大小为0
 	users := make([]*UserModel, 0)
 	var count uint64
 
 	where := fmt.Sprintf("username like '%%%s%%'", username)
+	//获取个数
 	if err := DB.Self.Model(&UserModel{}).Where(where).Count(&count).Error; err != nil {
 		return users, count, err
 	}
-
+	//获取用户数据 降序排列
 	if err := DB.Self.Where(where).Offset(offset).Limit(limit).Order("id desc").Find(&users).Error; err != nil {
 		return users, count, err
 	}
