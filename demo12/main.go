@@ -8,11 +8,11 @@ import (
 	"os"
 	"time"
 
-	"apiserver/config"
-	"apiserver/model"
-	v "apiserver/pkg/version"
-	"apiserver/router"
-	"apiserver/router/middleware"
+	"apiserver_demos/demo12/config"
+	"apiserver_demos/demo12/model"
+	v "apiserver_demos/demo12/pkg/version"
+	"apiserver_demos/demo12/router"
+	"apiserver_demos/demo12/router/middleware"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
