@@ -57,6 +57,7 @@ func Parse(tokenString string, secret string) (*Context, error) {
 	}
 }
 
+// HTTP Header Authorization: Bearer $token 来携带 token
 // ParseRequest gets the token from the header and
 // pass it to the Parse function to parses the token.
 func ParseRequest(c *gin.Context) (*Context, error) {

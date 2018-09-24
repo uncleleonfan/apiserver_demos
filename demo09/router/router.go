@@ -3,9 +3,9 @@ package router
 import (
 	"net/http"
 
-	"apiserver/handler/sd"
-	"apiserver/handler/user"
-	"apiserver/router/middleware"
+	"apiserver_demos/demo09/handler/sd"
+	"apiserver_demos/demo09/handler/user"
+	"apiserver_demos/demo09/router/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,9 +28,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 
 	// The user handlers, requiring authentication
 	u := g.Group("/v1/user")
+	u.POST("", user.Create)
 	u.Use(middleware.AuthMiddleware())
 	{
-		u.POST("", user.Create)
 		u.DELETE("/:id", user.Delete)
 		u.PUT("/:id", user.Update)
 		u.GET("", user.List)
